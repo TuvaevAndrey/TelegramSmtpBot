@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.atuvaev'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.telegram', name: 'telegrambots', version: '4.1.2'
+    compile 'org.telegram:telegrambots-abilities:4.1.2'
+    compile group: 'org.subethamail', name: 'subethasmtp', version: '3.1.7'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+apply plugin: 'java'
+
+task runApp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'App'
+}
