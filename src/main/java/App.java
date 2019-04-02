@@ -14,7 +14,6 @@ public class App {
         SimpleMessageListenerAdapter adapter = new SimpleMessageListenerAdapter(
             Collections.singletonList(new EmailListener()));
         SMTPServer smtpServer = new SMTPServer(adapter);
-        smtpServer.setPort(25000);
         smtpServer.start();
 
         ApiContextInitializer.init();
