@@ -10,12 +10,6 @@ import telegram.RegistrationBot;
 public class App {
 
     public static void main(String[] args) throws TelegramApiRequestException {
-
-        SimpleMessageListenerAdapter adapter = new SimpleMessageListenerAdapter(
-            Collections.singletonList(new EmailListener()));
-        SMTPServer smtpServer = new SMTPServer(adapter);
-        smtpServer.start();
-
         ApiContextInitializer.init();
 
         String token = "889002123:AAHplyrpTt0GvP2EEY2AbN_Ho6tgFwi4LM0";
@@ -25,5 +19,9 @@ public class App {
         RegistrationBot bot = new RegistrationBot(token, name);
         telegramBotsApi.registerBot(bot);
 
+        SimpleMessageListenerAdapter adapter = new SimpleMessageListenerAdapter(
+            Collections.singletonList(new EmailListener(bot)));
+        SMTPServer smtpServer = new SMTPServer(adapter);
+        smtpServer.start();
     }
 }

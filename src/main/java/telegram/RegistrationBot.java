@@ -3,6 +3,7 @@ package telegram;
 import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.ADMIN;
 
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -12,9 +13,10 @@ import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.MessageContext;
 
+@SuppressWarnings("unused")
 public class RegistrationBot extends AbilityBot {
 
-    private Map<String, Set<Long>> emails = new ConcurrentHashMap<>();
+    private static Map<String, Set<Long>> emails = new ConcurrentHashMap<>();
 
     public RegistrationBot(String botToken, String botUsername) {
         super(botToken, botUsername);
@@ -29,7 +31,6 @@ public class RegistrationBot extends AbilityBot {
             .locality(USER)
             .privacy(ADMIN)
             .action(this::register)
-            //.post(System.out::println)
             .build();
     }
 
@@ -42,8 +43,12 @@ public class RegistrationBot extends AbilityBot {
             .locality(USER)
             .privacy(ADMIN)
             .action(this::deregister)
-            //.post(System.out::println)
             .build();
+    }
+
+    public void sendPayload(String to, InputStream payload) {
+        Optional.ofNullable(emails.get(to))
+            .ifPresent(ids -> ids.forEach(it -> silent.send("Yo", it)));
     }
 
     @Override
