@@ -1,14 +1,17 @@
 package telegram;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.ADMIN;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.io.IOUtils;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.MessageContext;
@@ -48,7 +51,14 @@ public class RegistrationBot extends AbilityBot {
 
     public void sendPayload(String to, InputStream payload) {
         Optional.ofNullable(emails.get(to))
-            .ifPresent(ids -> ids.forEach(it -> silent.send("Yo", it)));
+            .ifPresent(
+                ids -> ids.forEach(it -> {
+                    try {
+                        silent.send(IOUtils.toString(payload, UTF_8.name()), it);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }));
     }
 
     @Override
@@ -57,7 +67,6 @@ public class RegistrationBot extends AbilityBot {
     }
 
     private void register(MessageContext messageContext) {
-        System.out.println("Registration of:" + messageContext.toString());
         Optional<Boolean> added = Optional.ofNullable(emails.get(messageContext.firstArg()))
             .map(it -> it.add(messageContext.chatId()));
 

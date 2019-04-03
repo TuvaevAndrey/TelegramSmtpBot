@@ -13,8 +13,10 @@ repositories {
 
 dependencies {
     compile group: 'org.telegram', name: 'telegrambots', version: '4.1.2'
-    compile 'org.telegram:telegrambots-abilities:4.1.2'
+    compile group: 'org.telegram', name: 'telegrambots-abilities', version: '4.1.2'
     compile group: 'org.subethamail', name: 'subethasmtp', version: '3.1.7'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.slf4j:slf4j-simple:1.7.25'
 
