@@ -12,13 +12,15 @@ public class App {
     public static void main(String[] args) throws TelegramApiRequestException {
         ApiContextInitializer.init();
 
-        String token = "889002123:AAHplyrpTt0GvP2EEY2AbN_Ho6tgFwi4LM0";
-        String name = "SmtpProxyBot";
+        String token = PropertyUtils.getProperty("token");
+        String name = PropertyUtils.getProperty("name");
 
+        // run telegram bot
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         RegistrationBot bot = new RegistrationBot(token, name);
         telegramBotsApi.registerBot(bot);
 
+        // run smtp server
         SimpleMessageListenerAdapter adapter = new SimpleMessageListenerAdapter(
             Collections.singletonList(new EmailListener(bot)));
         SMTPServer smtpServer = new SMTPServer(adapter);

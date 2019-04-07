@@ -56,7 +56,7 @@ public class RegistrationBot extends AbilityBot {
                     try {
                         silent.send(IOUtils.toString(payload, UTF_8.name()), it);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("Unable to parse payload: " + e);
                     }
                 }));
     }
