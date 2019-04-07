@@ -1,5 +1,5 @@
 # TelegramSmtpBot
-Registering/deregistering emails via bot allows to get their payload from SMTP server.
+Registering/deregistering emails via bot allows getting their payload from SMTP server.
 
 Use: `./gradlew runApp` to start app.
 
